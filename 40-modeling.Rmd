@@ -30,3 +30,5 @@ USvideos_ML <- USvideos_NNA %>%
 USvideos_ML
 ```
 
+Note: remember divide the samples to trainning set and test set randomly first.
+
