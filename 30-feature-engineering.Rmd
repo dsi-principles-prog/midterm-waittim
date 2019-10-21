@@ -3,6 +3,10 @@ title: "30-feature-engineering"
 output: html_notebook
 ---
 
+## Create functions
+
+### Get date point
+
 Create a function for spliting the trending date column into 3 columns. And in this part, we can verify the column type first to make sure it's date type or not. If it isn't a date type column, the function will stop and reture "Not a date format, please use 'lubridate' package."
 
 ```{r get_day_point}
@@ -28,6 +32,8 @@ Test the function.
 get_day_point(USvideos_NNA, "trending_date")%>%
   select(date_year,date_month,date_day)
 ```
+
+### Get time point 
 
 And for the column called "publish_time", we can split it into 6 columns. The type is "POSIXct", what is different with the last one. And this function will test the type first too.
 Different pulish time will influence the attention obviously, as a result, a video published in right time will get the more views in the beginning.
@@ -57,6 +63,7 @@ get_time_point(USvideos_NNA, "publish_time") %>%
 select(time_year,time_month,time_day,time_hour,time_minute,time_second)
 ```
 
+### Get week day
 
 ```{r get_weekday}
 get_weekday <- function(df, time_column){
@@ -73,6 +80,7 @@ get_weekday(USvideos_NNA, publish_time) %>%
   select(publish_time, weekday)
 ```
 
+### Count rows
 
 Now we will create a function to count the number of rows in decription column. The pattern of Line break symbol is "\\n". Count the number of "\\n" and plus 1, the result should be the the number of row.
 ```{r count_rows}
@@ -89,6 +97,8 @@ count_rows(USvideos_NNA, description) %>%
   select(description,chr_row_num)
 ```
 
+### Count pattern
+
 This function is similar to the last one but it is used to count the number of tags. And the dataset use "|" to split the tags. So the number of tags should be the number of "|" plus 1.
 ```{r count_pattern}
 count_pattern <- function(df, tag_column){
@@ -104,7 +114,7 @@ count_pattern(USvideos_NNA, tags) %>%
   select(tags,pattern_num)
 ```
 
-
+### Count uppercase
 
 ```{r count_uppercase}
 count_uppercase <- function(df, chr_column){
@@ -119,6 +129,7 @@ count_uppercase(USvideos_NNA, title) %>%
   select(title, chr_upper_num)
 ```
 
+### Count symbol
 
 ```{r count_symbol}
 count_symbol <- function(df, chr_column){
@@ -133,7 +144,7 @@ count_symbol(USvideos_NNA, title) %>%
   select(title, chr_symbol_num)
 ```
 
-
+### Get character length
 
 The length of title might influence the result too. Therefore we could create a funcion to calculate the length of character column.
 Of course, this function could be used to calculate the length of description column too.
@@ -151,6 +162,8 @@ get_chr_length(USvideos_NNA, title) %>%
   select(title,chr_length)
 ```
 
+### Get ratio
+
 Sometimes we might need calculate the ratio between 2 variables. This function can help us to get the ratio column.
 ```{r get_ratio}
 get_ratio <- function(df, numerator, denominator){
@@ -163,6 +176,8 @@ get_ratio <- function(df, numerator, denominator){
     mutate(new_col_name = {{numerator}}/{{denominator}})
 }
 ```
+
+### Convert logical to 0/1
 
 Because there are some logical columns in our dataset, but if we want to use machine learning to predict the trending video, it will be easier when we convert them from TRUE/FALSE into 1/0.
 ```{r convert_to_01}
@@ -186,7 +201,7 @@ convert_to_01(USvideos_NNA, comments_disabled, ratings_disabled, video_error_or_
 
 
 
-### Prepare the data for modeling
+## Prepare the data for modeling
 
 Now use the functions we defined before to complish the feature engineering.
 ```{r feature engineering}
