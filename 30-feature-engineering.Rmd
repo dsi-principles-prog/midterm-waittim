@@ -223,7 +223,12 @@ USvideos_NNA <- get_chr_length(USvideos_NNA, title)
 
 USvideos_NNA <- convert_to_01(USvideos_NNA, comments_disabled, ratings_disabled, video_error_or_removed)
 
-USvideos_NNA <- 
+USvideos_NNA <- get_weekday(USvideos_NNA, publish_time)
+
+USvideos_NNA <- count_uppercase(USvideos_NNA, title)
+
+USvideos_NNA <- count_symbol(USvideos_NNA, title) 
+
 ```
 
 A quick overview after the feature engineering result.
