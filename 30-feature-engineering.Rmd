@@ -7,27 +7,20 @@ output: html_notebook
 
 ### Get date point
 
-Create a function for spliting the trending date column into 3 columns. And in this part, we can verify the column type first to make sure it's date type or not. If it isn't a date type column, the function will stop and reture "Not a date format, please use 'lubridate' package."
+Create a function for splitting the trending date column into 3 columns. And in this part, we can verify the column type first to make sure it's date type or not. If it isn't a date type column, the function will stop and reture "Not a date format, please use 'lubridate' package."
 
 ```{r get_day_point}
 get_day_point <- function(df, day_column){
-
-  if(class(df[[day_column]])=="Date"){
-    print("Date format check done.")
-  }else{
-      stop("Not a date format, please use 'lubridate' package.")
-  }
-
-  df %>%
-    mutate_at(day_column, list(date_year=year, 
-                               date_month=month, 
-                               date_day=day)) 
+  # You can code here
+  
+  
+  # End of the code
 }
 ```
 
 Test the function.
 ```{r get_day_point test}
-get_day_point(USvideos_NNA, "trending_date")%>%
+get_day_point(USvideos_NNA, trending_date)%>%
   select(date_year,date_month,date_day)
 ```
 
@@ -38,13 +31,8 @@ Different pulish time will influence the attention obviously, as a result, a vid
 ```{r get_time_point}
 get_time_point <- function(df, time_column){
 
-  if(class(df[[time_column]])[1]=="POSIXct"){
-    print("Timeformat check done.")
-  }else{
-      stop("Not a time format, please use 'lubridate' package.")
-  }
   df %>%
-    mutate_at(time_column, list(time_year=year, 
+    mutate_at({{time_column}}, list(time_year=year, 
                                 time_month=month, 
                                 time_day=day, 
                                 time_hour=hour, 
@@ -55,7 +43,7 @@ get_time_point <- function(df, time_column){
 
 Test the function.
 ```{r get_time_point test}
-get_time_point(USvideos_NNA, "publish_time") %>%
+get_time_point(USvideos_NNA, publish_time) %>%
 select(time_year,time_month,time_day,time_hour,time_minute,time_second)
 ```
 
@@ -83,9 +71,10 @@ The rows' number of description represents the length of the description. A desc
 The pattern of Line break symbol is "\\n". Count the number of "\\n" and plus 1, the result should be the the number of row.
 ```{r count_rows}
 count_rows <- function(df, chr_column){
+  # You can code here
   
-  df %>%
-    mutate(chr_row_num = stringr::str_count({{chr_column}}, pattern = fixed("\\n")) + 1)
+  
+  # End of the code
 }
 ```
 
@@ -238,8 +227,8 @@ Now use the functions we defined before to complish the feature engineering.
 USvideos_NNA <- USvideos_NNA %>%
   class_level(views) %>%
   get_ratio(likes, dislikes) %>%
-  get_day_point("trending_date") %>%
-  get_time_point("publish_time") %>%
+  get_day_point(trending_date) %>%
+  get_time_point(publish_time) %>%
   get_weekday(publish_time) %>%
   count_rows(description) %>%
   count_pattern(tags) %>%
@@ -263,9 +252,9 @@ assert(data = USvideos_NNA, in_set(1, 0, allow.na = FALSE), ratings_disabled)
 assert(data = USvideos_NNA, in_set(1, 0, allow.na = FALSE), video_error_or_removed) 
 assert(data = USvideos_NNA, in_set("level1", "level2","level3","level4", allow.na = FALSE), level)
 assert(data = USvideos_NNA, within_bounds(lower.bound = 0, upper.bound = Inf, allow.na = FALSE), likes_rate)
-assert(data = USvideos_NNA, in_set(2017, 2018, allow.na = FALSE), date_year)
-assert(data = USvideos_NNA, in_set(seq(1,12,1), allow.na = FALSE), date_month)
-assert(data = USvideos_NNA, in_set(seq(1,31,1), allow.na = FALSE), date_day)
+# assert(data = USvideos_NNA, in_set(2017, 2018, allow.na = FALSE), date_year)
+# assert(data = USvideos_NNA, in_set(seq(1,12,1), allow.na = FALSE), date_month)
+# assert(data = USvideos_NNA, in_set(seq(1,31,1), allow.na = FALSE), date_day)
 assert(data = USvideos_NNA, in_set(seq(2006,2018,1), allow.na = FALSE), time_year)
 assert(data = USvideos_NNA, in_set(seq(1,12,1), allow.na = FALSE), time_month)
 assert(data = USvideos_NNA, in_set(seq(1,31,1), allow.na = FALSE), time_day)
@@ -273,7 +262,7 @@ assert(data = USvideos_NNA, in_set(seq(0,23,1), allow.na = FALSE), time_hour)
 assert(data = USvideos_NNA, in_set(seq(0,59,1), allow.na = FALSE), time_minute)
 assert(data = USvideos_NNA, in_set(seq(0,59,1), allow.na = FALSE), time_second)
 assert(data = USvideos_NNA, in_set(c("Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"), allow.na = FALSE), weekday)
-assert(data = USvideos_NNA, within_bounds(lower.bound = 0, upper.bound = Inf, allow.na = FALSE), chr_row_num)
+#assert(data = USvideos_NNA, within_bounds(lower.bound = 0, upper.bound = Inf, allow.na = FALSE), chr_row_num)
 assert(data = USvideos_NNA, within_bounds(lower.bound = 0, upper.bound = Inf, allow.na = FALSE), pattern_num)
 assert(data = USvideos_NNA, within_bounds(lower.bound = 0, upper.bound = Inf, allow.na = FALSE), chr_length)
 assert(data = USvideos_NNA, within_bounds(lower.bound = 0, upper.bound = Inf, allow.na = FALSE), chr_upper_num)
@@ -289,3 +278,35 @@ USvideos_NNA %>%
   select(views, likes, dislikes, comment_count, everything()) %>%
   write_csv("data/USvideos_fe.csv")
 ```
+
+
+## Select the columns
+
+Now we can just select all of the numerical columns for modeling conveniently. Based on the data, we can try to use a simple machine learning model to predict. Of course, you can change this part and select the columns what is useful in your opinion.
+The columns called "views", "likes", "dislikes" and "comment_count" might can be used to identify the video is trending or not as the label.(The unselected column "level" could be used to identify too.) And the others could be used as inputs.
+```{r select useful column}
+USvideos_ML <- USvideos_NNA %>%
+  select(views, 
+         likes, 
+         dislikes, 
+         comment_count, 
+         category_id, 
+         comments_disabled, 
+         ratings_disabled, 
+         video_error_or_removed,
+         date_year,
+         date_month,
+         date_day,
+         time_year,
+         time_month,
+         time_day,
+         time_hour,
+         time_minute,
+         time_second,
+         chr_row_num,
+         pattern_num,
+         chr_length)
+USvideos_ML
+```
+
+Note: remember divide the samples to trainning set and test set randomly first.
