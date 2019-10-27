@@ -1874,10 +1874,150 @@ See problems(...) for more details.</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
+</div>
+<div id="overview" class="section level2">
+<h2>Overview</h2>
+<p>For the operation in the future, having a overview can help us understand the dataset easily.</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZGltKFVTdmlkZW9zKVxuYGBgIn0= -->
+<pre class="r"><code>dim(USvideos)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIDQwOTQ5ICAgIDE2XG4ifQ== -->
+<pre><code>[1] 40949    16</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc3RyKFVTdmlkZW9zKVxuYGBgIn0= -->
+<pre class="r"><code>str(USvideos)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiQ2xhc3NlcyDigJhzcGVjX3RibF9kZuKAmSwg4oCYdGJsX2Rm4oCZLCDigJh0YmzigJkgYW5kICdkYXRhLmZyYW1lJzpcdDQwOTQ5IG9icy4gb2YgIDE2IHZhcmlhYmxlczpcbiAkIHZpZGVvX2lkICAgICAgICAgICAgICA6IGNociAgXCIya3lTNlN2U1lTRVwiIFwiMVpBUHdmcnRBRllcIiBcIjVxcGpLNURnQ3Q0XCIgXCJwdXFhV3JFQzd0WVwiIC4uLlxuICQgdHJlbmRpbmdfZGF0ZSAgICAgICAgIDogY2hyICBcIjE3LjE0LjExXCIgXCIxNy4xNC4xMVwiIFwiMTcuMTQuMTFcIiBcIjE3LjE0LjExXCIgLi4uXG4gJCB0aXRsZSAgICAgICAgICAgICAgICAgOiBjaHIgIFwiV0UgV0FOVCBUTyBUQUxLIEFCT1VUIE9VUiBNQVJSSUFHRVwiIFwiVGhlIFRydW1wIFByZXNpZGVuY3k6IExhc3QgV2VlayBUb25pZ2h0IHdpdGggSm9obiBPbGl2ZXIgKEhCTylcIiBcIlJhY2lzdCBTdXBlcm1hbiB8IFJ1ZHkgTWFuY3VzbywgS2luZyBCYWNoICYgTGVsZSBQb25zXCIgXCJOaWNrZWxiYWNrIEx5cmljczogUmVhbCBvciBGYWtlP1wiIC4uLlxuICQgY2hhbm5lbF90aXRsZSAgICAgICAgIDogY2hyICBcIkNhc2V5TmVpc3RhdFwiIFwiTGFzdFdlZWtUb25pZ2h0XCIgXCJSdWR5IE1hbmN1c29cIiBcIkdvb2QgTXl0aGljYWwgTW9ybmluZ1wiIC4uLlxuICQgY2F0ZWdvcnlfaWQgICAgICAgICAgIDogbnVtICAyMiAyNCAyMyAyNCAyNCAyOCAyNCAyOCAxIDI1IC4uLlxuICQgcHVibGlzaF90aW1lICAgICAgICAgIDogUE9TSVhjdCwgZm9ybWF0OiBcIjIwMTctMTEtMTMgMTc6MTM6MDFcIiBcIjIwMTctMTEtMTMgMDc6MzA6MDBcIiBcIjIwMTctMTEtMTIgMTk6MDU6MjRcIiBcIjIwMTctMTEtMTMgMTE6MDA6MDRcIiAuLi5cbiAkIHRhZ3MgICAgICAgICAgICAgICAgICA6IGNociAgXCJTSEFOdGVsbCBtYXJ0aW5cIiBcImxhc3Qgd2VlayB0b25pZ2h0IHRydW1wIHByZXNpZGVuY3lcXFwifFxcXCJsYXN0IHdlZWsgdG9uaWdodCBkb25hbGQgdHJ1bXBcXFwifFxcXCJqb2huIG9saXZlciB0cnVtcFxcXCJ8XFxcImRvbmFsZCB0cnVtcFwiIFwicmFjaXN0IHN1cGVybWFuXFxcInxcXFwicnVkeVxcXCJ8XFxcIm1hbmN1c29cXFwifFxcXCJraW5nXFxcInxcXFwiYmFjaFxcXCJ8XFxcInJhY2lzdFxcXCJ8XFxcInN1cGVybWFuXFxcInxcXFwibG92ZVxcXCJ8XFxcInJ1ZHkgbWFuY3VzbyBwb28gYmVcInwgX190cnVuY2F0ZWRfXyBcInJoZXR0IGFuZCBsaW5rXFxcInxcXFwiZ21tXFxcInxcXFwiZ29vZCBteXRoaWNhbCBtb3JuaW5nXFxcInxcXFwicmhldHQgYW5kIGxpbmsgZ29vZCBteXRoaWNhbCBtb3JuaW5nXFxcInxcXFwiZ29vZCBteXRoaWNhbCBtb3JcInwgX190cnVuY2F0ZWRfXyAuLi5cbiAkIHZpZXdzICAgICAgICAgICAgICAgICA6IG51bSAgNzQ4Mzc0IDI0MTg3ODMgMzE5MTQzNCAzNDMxNjggMjA5NTczMSAuLi5cbiAkIGxpa2VzICAgICAgICAgICAgICAgICA6IG51bSAgNTc1MjcgOTcxODUgMTQ2MDMzIDEwMTcyIDEzMjIzNSAuLi5cbiAkIGRpc2xpa2VzICAgICAgICAgICAgICA6IG51bSAgMjk2NiA2MTQ2IDUzMzkgNjY2IDE5ODkgLi4uXG4gJCBjb21tZW50X2NvdW50ICAgICAgICAgOiBudW0gIDE1OTU0IDEyNzAzIDgxODEgMjE0NiAxNzUxOCAuLi5cbiAkIHRodW1ibmFpbF9saW5rICAgICAgICA6IGNociAgXCJodHRwczovL2kueXRpbWcuY29tL3ZpLzJreVM2U3ZTWVNFL2RlZmF1bHQuanBnXCIgXCJodHRwczovL2kueXRpbWcuY29tL3ZpLzFaQVB3ZnJ0QUZZL2RlZmF1bHQuanBnXCIgXCJodHRwczovL2kueXRpbWcuY29tL3ZpLzVxcGpLNURnQ3Q0L2RlZmF1bHQuanBnXCIgXCJodHRwczovL2kueXRpbWcuY29tL3ZpL3B1cWFXckVDN3RZL2RlZmF1bHQuanBnXCIgLi4uXG4gJCBjb21tZW50c19kaXNhYmxlZCAgICAgOiBsb2dpICBGQUxTRSBGQUxTRSBGQUxTRSBGQUxTRSBGQUxTRSBGQUxTRSAuLi5cbiAkIHJhdGluZ3NfZGlzYWJsZWQgICAgICA6IGxvZ2kgIEZBTFNFIEZBTFNFIEZBTFNFIEZBTFNFIEZBTFNFIEZBTFNFIC4uLlxuICQgdmlkZW9fZXJyb3Jfb3JfcmVtb3ZlZDogbG9naSAgRkFMU0UgRkFMU0UgRkFMU0UgRkFMU0UgRkFMU0UgRkFMU0UgLi4uXG4gJCBkZXNjcmlwdGlvbiAgICAgICAgICAgOiBjaHIgIFwiU0hBTlRFTEwnUyBDSEFOTkVMIC0gaHR0cHM6Ly93d3cueW91dHViZS5jb20vc2hhbnRlbGxtYXJ0aW5cXFxcbkNBTkRJQ0UgLSBodHRwczovL3d3dy5sb3ZlYmlsbHkuY29tXFxcXG5cXFxcbmZpbG1lZCB0XCJ8IF9fdHJ1bmNhdGVkX18gXCJPbmUgeWVhciBhZnRlciB0aGUgcHJlc2lkZW50aWFsIGVsZWN0aW9uLCBKb2huIE9saXZlciBkaXNjdXNzZXMgd2hhdCB3ZSd2ZSBsZWFybmVkIHNvIGZhciBhbmQgZW5saXN0cyBvdXIgY2F0aGVcInwgX190cnVuY2F0ZWRfXyBcIldBVENIIE1ZIFBSRVZJT1VTIFZJREVPIOKWtiBcXFxcblxcXFxuU1VCU0NSSUJFIOKWuiBodHRwczovL3d3dy55b3V0dWJlLmNvbS9jaGFubmVsL1VDNWprWHBmbkJobERqcWgwaXI1RnNJUT9zdWJfY29uZmlyXCJ8IF9fdHJ1bmNhdGVkX18gXCJUb2RheSB3ZSBmaW5kIG91dCBpZiBMaW5rIGlzIGEgTmlja2VsYmFjayBhbWF0ZXVyIG9yIGEgc2VjcmV0IE5pY2tlbGJhY2sgZGV2b3RlZS4gR01NICMxMjE4XFxcXG5Eb24ndCBtaXNzIGFuIGFsbFwifCBfX3RydW5jYXRlZF9fIC4uLlxuIC0gYXR0cigqLCBcInByb2JsZW1zXCIpPUNsYXNzZXMg4oCYdGJsX2Rm4oCZLCDigJh0YmzigJkgYW5kICdkYXRhLmZyYW1lJzpcdDE1MzM1NDQgb2JzLiBvZiAgNSB2YXJpYWJsZXM6XG4gIC4uJCByb3cgICAgIDogaW50ICAyIDIgMiAyIDIgMiAzIDMgMyAzIC4uLlxuICAuLiQgY29sICAgICA6IGNociAgXCJ0YWdzXCIgXCJ0YWdzXCIgXCJ0YWdzXCIgXCJ0YWdzXCIgLi4uXG4gIC4uJCBleHBlY3RlZDogY2hyICBcImRlbGltaXRlciBvciBxdW90ZVwiIFwiZGVsaW1pdGVyIG9yIHF1b3RlXCIgXCJkZWxpbWl0ZXIgb3IgcXVvdGVcIiBcImRlbGltaXRlciBvciBxdW90ZVwiIC4uLlxuICAuLiQgYWN0dWFsICA6IGNociAgXCJ8XCIgXCJsXCIgXCJ8XCIgXCJqXCIgLi4uXG4gIC4uJCBmaWxlICAgIDogY2hyICBcIidkYXRhL1VTdmlkZW9zLmNzdidcIiBcIidkYXRhL1VTdmlkZW9zLmNzdidcIiBcIidkYXRhL1VTdmlkZW9zLmNzdidcIiBcIidkYXRhL1VTdmlkZW9zLmNzdidcIiAuLi5cbiAtIGF0dHIoKiwgXCJzcGVjXCIpPVxuICAuLiBjb2xzKFxuICAuLiAgIHZpZGVvX2lkID0gXHUwMDFiWzMxbWNvbF9jaGFyYWN0ZXIoKVx1MDAxYlszOW0sXG4gIC4uICAgdHJlbmRpbmdfZGF0ZSA9IFx1MDAxYlszMW1jb2xfY2hhcmFjdGVyKClcdTAwMWJbMzltLFxuICAuLiAgIHRpdGxlID0gXHUwMDFiWzMxbWNvbF9jaGFyYWN0ZXIoKVx1MDAxYlszOW0sXG4gIC4uICAgY2hhbm5lbF90aXRsZSA9IFx1MDAxYlszMW1jb2xfY2hhcmFjdGVyKClcdTAwMWJbMzltLFxuICAuLiAgIGNhdGVnb3J5X2lkID0gXHUwMDFiWzMybWNvbF9kb3VibGUoKVx1MDAxYlszOW0sXG4gIC4uICAgcHVibGlzaF90aW1lID0gXHUwMDFiWzM0bWNvbF9kYXRldGltZShmb3JtYXQgPSBcIlwiKVx1MDAxYlszOW0sXG4gIC4uICAgdGFncyA9IFx1MDAxYlszMW1jb2xfY2hhcmFjdGVyKClcdTAwMWJbMzltLFxuICAuLiAgIHZpZXdzID0gXHUwMDFiWzMybWNvbF9kb3VibGUoKVx1MDAxYlszOW0sXG4gIC4uICAgbGlrZXMgPSBcdTAwMWJbMzJtY29sX2RvdWJsZSgpXHUwMDFiWzM5bSxcbiAgLi4gICBkaXNsaWtlcyA9IFx1MDAxYlszMm1jb2xfZG91YmxlKClcdTAwMWJbMzltLFxuICAuLiAgIGNvbW1lbnRfY291bnQgPSBcdTAwMWJbMzJtY29sX2RvdWJsZSgpXHUwMDFiWzM5bSxcbiAgLi4gICB0aHVtYm5haWxfbGluayA9IFx1MDAxYlszMW1jb2xfY2hhcmFjdGVyKClcdTAwMWJbMzltLFxuICAuLiAgIGNvbW1lbnRzX2Rpc2FibGVkID0gXHUwMDFiWzMzbWNvbF9sb2dpY2FsKClcdTAwMWJbMzltLFxuICAuLiAgIHJhdGluZ3NfZGlzYWJsZWQgPSBcdTAwMWJbMzNtY29sX2xvZ2ljYWwoKVx1MDAxYlszOW0sXG4gIC4uICAgdmlkZW9fZXJyb3Jfb3JfcmVtb3ZlZCA9IFx1MDAxYlszM21jb2xfbG9naWNhbCgpXHUwMDFiWzM5bSxcbiAgLi4gICBkZXNjcmlwdGlvbiA9IFx1MDAxYlszMW1jb2xfY2hhcmFjdGVyKClcdTAwMWJbMzltXG4gIC4uIClcbiJ9 -->
+<pre><code>Classes ‘spec_tbl_df’, ‘tbl_df’, ‘tbl’ and 'data.frame':    40949 obs. of  16 variables:
+ $ video_id              : chr  &quot;2kyS6SvSYSE&quot; &quot;1ZAPwfrtAFY&quot; &quot;5qpjK5DgCt4&quot; &quot;puqaWrEC7tY&quot; ...
+ $ trending_date         : chr  &quot;17.14.11&quot; &quot;17.14.11&quot; &quot;17.14.11&quot; &quot;17.14.11&quot; ...
+ $ title                 : chr  &quot;WE WANT TO TALK ABOUT OUR MARRIAGE&quot; &quot;The Trump Presidency: Last Week Tonight with John Oliver (HBO)&quot; &quot;Racist Superman | Rudy Mancuso, King Bach &amp; Lele Pons&quot; &quot;Nickelback Lyrics: Real or Fake?&quot; ...
+ $ channel_title         : chr  &quot;CaseyNeistat&quot; &quot;LastWeekTonight&quot; &quot;Rudy Mancuso&quot; &quot;Good Mythical Morning&quot; ...
+ $ category_id           : num  22 24 23 24 24 28 24 28 1 25 ...
+ $ publish_time          : POSIXct, format: &quot;2017-11-13 17:13:01&quot; &quot;2017-11-13 07:30:00&quot; &quot;2017-11-12 19:05:24&quot; &quot;2017-11-13 11:00:04&quot; ...
+ $ tags                  : chr  &quot;SHANtell martin&quot; &quot;last week tonight trump presidency\&quot;|\&quot;last week tonight donald trump\&quot;|\&quot;john oliver trump\&quot;|\&quot;donald trump&quot; &quot;racist superman\&quot;|\&quot;rudy\&quot;|\&quot;mancuso\&quot;|\&quot;king\&quot;|\&quot;bach\&quot;|\&quot;racist\&quot;|\&quot;superman\&quot;|\&quot;love\&quot;|\&quot;rudy mancuso poo be&quot;| __truncated__ &quot;rhett and link\&quot;|\&quot;gmm\&quot;|\&quot;good mythical morning\&quot;|\&quot;rhett and link good mythical morning\&quot;|\&quot;good mythical mor&quot;| __truncated__ ...
+ $ views                 : num  748374 2418783 3191434 343168 2095731 ...
+ $ likes                 : num  57527 97185 146033 10172 132235 ...
+ $ dislikes              : num  2966 6146 5339 666 1989 ...
+ $ comment_count         : num  15954 12703 8181 2146 17518 ...
+ $ thumbnail_link        : chr  &quot;https://i.ytimg.com/vi/2kyS6SvSYSE/default.jpg&quot; &quot;https://i.ytimg.com/vi/1ZAPwfrtAFY/default.jpg&quot; &quot;https://i.ytimg.com/vi/5qpjK5DgCt4/default.jpg&quot; &quot;https://i.ytimg.com/vi/puqaWrEC7tY/default.jpg&quot; ...
+ $ comments_disabled     : logi  FALSE FALSE FALSE FALSE FALSE FALSE ...
+ $ ratings_disabled      : logi  FALSE FALSE FALSE FALSE FALSE FALSE ...
+ $ video_error_or_removed: logi  FALSE FALSE FALSE FALSE FALSE FALSE ...
+ $ description           : chr  &quot;SHANTELL'S CHANNEL - https://www.youtube.com/shantellmartin\\nCANDICE - https://www.lovebilly.com\\n\\nfilmed t&quot;| __truncated__ &quot;One year after the presidential election, John Oliver discusses what we've learned so far and enlists our cathe&quot;| __truncated__ &quot;WATCH MY PREVIOUS VIDEO ▶ \\n\\nSUBSCRIBE ► https://www.youtube.com/channel/UC5jkXpfnBhlDjqh0ir5FsIQ?sub_confir&quot;| __truncated__ &quot;Today we find out if Link is a Nickelback amateur or a secret Nickelback devotee. GMM #1218\\nDon't miss an all&quot;| __truncated__ ...
+ - attr(*, &quot;problems&quot;)=Classes ‘tbl_df’, ‘tbl’ and 'data.frame':    1533544 obs. of  5 variables:
+  ..$ row     : int  2 2 2 2 2 2 3 3 3 3 ...
+  ..$ col     : chr  &quot;tags&quot; &quot;tags&quot; &quot;tags&quot; &quot;tags&quot; ...
+  ..$ expected: chr  &quot;delimiter or quote&quot; &quot;delimiter or quote&quot; &quot;delimiter or quote&quot; &quot;delimiter or quote&quot; ...
+  ..$ actual  : chr  &quot;|&quot; &quot;l&quot; &quot;|&quot; &quot;j&quot; ...
+  ..$ file    : chr  &quot;'data/USvideos.csv'&quot; &quot;'data/USvideos.csv'&quot; &quot;'data/USvideos.csv'&quot; &quot;'data/USvideos.csv'&quot; ...
+ - attr(*, &quot;spec&quot;)=
+  .. cols(
+  ..   video_id = [31mcol_character()[39m,
+  ..   trending_date = [31mcol_character()[39m,
+  ..   title = [31mcol_character()[39m,
+  ..   channel_title = [31mcol_character()[39m,
+  ..   category_id = [32mcol_double()[39m,
+  ..   publish_time = [34mcol_datetime(format = &quot;&quot;)[39m,
+  ..   tags = [31mcol_character()[39m,
+  ..   views = [32mcol_double()[39m,
+  ..   likes = [32mcol_double()[39m,
+  ..   dislikes = [32mcol_double()[39m,
+  ..   comment_count = [32mcol_double()[39m,
+  ..   thumbnail_link = [31mcol_character()[39m,
+  ..   comments_disabled = [33mcol_logical()[39m,
+  ..   ratings_disabled = [33mcol_logical()[39m,
+  ..   video_error_or_removed = [33mcol_logical()[39m,
+  ..   description = [31mcol_character()[39m
+  .. )</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>As we can see, there are 16 variables and 40949 observations in the original data.</p>
+<table>
+<colgroup>
+<col width="50%"></col>
+<col width="50%"></col>
+</colgroup>
+<thead>
+<tr class="header">
+<th>Variables</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>video_id</strong></td>
+<td>A unique string for each observation to identify the different videos.</td>
+</tr>
+<tr class="even">
+<td><strong>trending_date</strong></td>
+<td>The date that each video be define as a trending video (appeared in <a href="https://www.youtube.com/feed/trending">top trending videos</a> page ).</td>
+</tr>
+<tr class="odd">
+<td><strong>title</strong></td>
+<td>The title of the video.</td>
+</tr>
+<tr class="even">
+<td><strong>channel_title</strong></td>
+<td>The channel title that created by youtubers themselves.</td>
+</tr>
+<tr class="odd">
+<td><strong>category_id</strong></td>
+<td>The catebory number of each video where it was posted. If you need the name of each catebory, please check the JSON file.</td>
+</tr>
+<tr class="even">
+<td><strong>publish_time</strong></td>
+<td>The excect time when youtuber posted the video.</td>
+</tr>
+<tr class="odd">
+<td><strong>tags</strong></td>
+<td>The tags youtuber defined for each video.</td>
+</tr>
+<tr class="even">
+<td><strong>views</strong></td>
+<td>The number of views.</td>
+</tr>
+<tr class="odd">
+<td><strong>likes</strong></td>
+<td>The number of likes.</td>
+</tr>
+<tr class="even">
+<td><strong>dislikes</strong></td>
+<td>The number of dislikes.</td>
+</tr>
+<tr class="odd">
+<td><strong>comment_count</strong></td>
+<td>The number of comments.</td>
+</tr>
+<tr class="even">
+<td><strong>thumbnail_link</strong></td>
+<td>The thumbnail of each video cover.</td>
+</tr>
+<tr class="odd">
+<td><strong>comments_disabled</strong></td>
+<td>Viewers can comment or not.</td>
+</tr>
+<tr class="even">
+<td><strong>ratings_disabled</strong></td>
+<td>viewers can rate the video or not.</td>
+</tr>
+<tr class="odd">
+<td><strong>video_error_or_removed</strong></td>
+<td>The video was removed or not.</td>
+</tr>
+<tr class="even">
+<td><strong>description</strong></td>
+<td>The description of each video, created by youtubers.</td>
+</tr>
+</tbody>
+</table>
 <!-- rnb-text-end -->
 </div>
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiMTAtaW1wb3J0IgpvdXRwdXQ6IGh0bWxfbm90ZWJvb2sKLS0tCgojIyBMb2FkIHRoZSBsaWJyYXJpZXMKCkxpYnJhcnkgbGlzdDogCgpgYGB7ciBsaWJyYXJpZXNfbGlzdH0KbGlicmFyeShyZWFkcikKbGlicmFyeShyanNvbikKbGlicmFyeShqYW5pdG9yKQpsaWJyYXJ5KGFzc2VydHIpCmxpYnJhcnkodGlkeXZlcnNlKQpsaWJyYXJ5KGx1YnJpZGF0ZSkKbGlicmFyeShnbHVlKQpsaWJyYXJ5KHNjYWxlcykKYGBgCgojIyBMb2FkIGRhdGEKCk5vdyB3ZSBjYW4gaW1wb3J0IHRoZSBkYXRhc2V0IGFuZCBjbGVhbiB0aGUgbmFtZXMgZmlyc3QuCgpgYGB7ciBpbXBvcnQgZGF0YX0KVVN2aWRlb3MgPC0gcmVhZF9jc3YoImRhdGEvVVN2aWRlb3MuY3N2IikgJT4lCiAgY2xlYW5fbmFtZXMoKQpgYGAKCk5vdyBpbXBvcnQgdGhlIGNhdGVnb3J5IG5hbWUgZnJvbSBKU09OIGZpbGUuCmBgYHtyfQpjYXRlZ29yeV9pZCA9IGZyb21KU09OKGZpbGUgPSAiZGF0YS9VU19jYXRlZ29yeV9pZC5qc29uIiwgIHVuZXhwZWN0ZWQuZXNjYXBlID0gImVycm9yIikKYGBgCgo=</div>
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiMTAtaW1wb3J0IgpvdXRwdXQ6IGh0bWxfbm90ZWJvb2sKLS0tCgojIyBMb2FkIHRoZSBsaWJyYXJpZXMKCkxpYnJhcnkgbGlzdDogCgpgYGB7ciBsaWJyYXJpZXNfbGlzdH0KbGlicmFyeShyZWFkcikKbGlicmFyeShyanNvbikKbGlicmFyeShqYW5pdG9yKQpsaWJyYXJ5KGFzc2VydHIpCmxpYnJhcnkodGlkeXZlcnNlKQpsaWJyYXJ5KGx1YnJpZGF0ZSkKbGlicmFyeShnbHVlKQpsaWJyYXJ5KHNjYWxlcykKYGBgCgojIyBMb2FkIGRhdGEKCk5vdyB3ZSBjYW4gaW1wb3J0IHRoZSBkYXRhc2V0IGFuZCBjbGVhbiB0aGUgbmFtZXMgZmlyc3QuCgpgYGB7ciBpbXBvcnQgZGF0YX0KVVN2aWRlb3MgPC0gcmVhZF9jc3YoImRhdGEvVVN2aWRlb3MuY3N2IikgJT4lCiAgY2xlYW5fbmFtZXMoKQpgYGAKCk5vdyBpbXBvcnQgdGhlIGNhdGVnb3J5IG5hbWUgZnJvbSBKU09OIGZpbGUuCmBgYHtyfQpjYXRlZ29yeV9pZCA9IGZyb21KU09OKGZpbGUgPSAiZGF0YS9VU19jYXRlZ29yeV9pZC5qc29uIiwgIHVuZXhwZWN0ZWQuZXNjYXBlID0gImVycm9yIikKYGBgCgojIyBPdmVydmlldwoKRm9yIHRoZSBvcGVyYXRpb24gaW4gdGhlIGZ1dHVyZSwgaGF2aW5nIGEgb3ZlcnZpZXcgY2FuIGhlbHAgdXMgdW5kZXJzdGFuZCB0aGUgZGF0YXNldCBlYXNpbHkuCgpgYGB7ciBvdmVydmlld30KZGltKFVTdmlkZW9zKQpzdHIoVVN2aWRlb3MpCmBgYAoKQXMgd2UgY2FuIHNlZSwgdGhlcmUgYXJlIDE2IHZhcmlhYmxlcyBhbmQgNDA5NDkgb2JzZXJ2YXRpb25zIGluIHRoZSBvcmlnaW5hbCBkYXRhLiAKClZhcmlhYmxlcyB8IGRlc2NyaXB0aW9uCi0tLXwtLS0KKip2aWRlb19pZCoqIHwgQSB1bmlxdWUgc3RyaW5nIGZvciBlYWNoIG9ic2VydmF0aW9uIHRvIGlkZW50aWZ5IHRoZSBkaWZmZXJlbnQgdmlkZW9zLgoqKnRyZW5kaW5nX2RhdGUqKiB8IFRoZSBkYXRlIHRoYXQgZWFjaCB2aWRlbyBiZSBkZWZpbmUgYXMgYSB0cmVuZGluZyB2aWRlbyAoYXBwZWFyZWQgaW4gIFt0b3AgdHJlbmRpbmcgdmlkZW9zXShodHRwczovL3d3dy55b3V0dWJlLmNvbS9mZWVkL3RyZW5kaW5nKSBwYWdlICkuCioqdGl0bGUqKiB8IFRoZSB0aXRsZSBvZiB0aGUgdmlkZW8uCioqY2hhbm5lbF90aXRsZSoqIHwgVGhlIGNoYW5uZWwgdGl0bGUgdGhhdCBjcmVhdGVkIGJ5IHlvdXR1YmVycyB0aGVtc2VsdmVzLgoqKmNhdGVnb3J5X2lkKiogfCBUaGUgY2F0ZWJvcnkgbnVtYmVyIG9mIGVhY2ggdmlkZW8gd2hlcmUgaXQgd2FzIHBvc3RlZC4gSWYgeW91IG5lZWQgdGhlIG5hbWUgb2YgZWFjaCBjYXRlYm9yeSwgcGxlYXNlIGNoZWNrIHRoZSBKU09OIGZpbGUuCioqcHVibGlzaF90aW1lKiogfCBUaGUgZXhjZWN0IHRpbWUgd2hlbiB5b3V0dWJlciBwb3N0ZWQgdGhlIHZpZGVvLgoqKnRhZ3MqKiB8IFRoZSB0YWdzIHlvdXR1YmVyIGRlZmluZWQgZm9yIGVhY2ggdmlkZW8uCioqdmlld3MqKiB8IFRoZSBudW1iZXIgb2Ygdmlld3MuCioqbGlrZXMqKiB8IFRoZSBudW1iZXIgb2YgbGlrZXMuCioqZGlzbGlrZXMqKiB8IFRoZSBudW1iZXIgb2YgZGlzbGlrZXMuCioqY29tbWVudF9jb3VudCoqIHwgVGhlIG51bWJlciBvZiBjb21tZW50cy4KKip0aHVtYm5haWxfbGluayoqIHwgVGhlIHRodW1ibmFpbCBvZiBlYWNoIHZpZGVvIGNvdmVyLgoqKmNvbW1lbnRzX2Rpc2FibGVkKiogfCBWaWV3ZXJzIGNhbiBjb21tZW50IG9yIG5vdC4KKipyYXRpbmdzX2Rpc2FibGVkKiogfCB2aWV3ZXJzIGNhbiByYXRlIHRoZSB2aWRlbyBvciBub3QuCioqdmlkZW9fZXJyb3Jfb3JfcmVtb3ZlZCoqIHwgVGhlIHZpZGVvIHdhcyByZW1vdmVkIG9yIG5vdC4KKipkZXNjcmlwdGlvbioqIHwgVGhlIGRlc2NyaXB0aW9uIG9mIGVhY2ggdmlkZW8sIGNyZWF0ZWQgYnkgeW91dHViZXJzLgo=</div>
 
 
 

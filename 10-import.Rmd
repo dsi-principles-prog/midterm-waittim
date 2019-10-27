@@ -32,3 +32,32 @@ Now import the category name from JSON file.
 category_id = fromJSON(file = "data/US_category_id.json",  unexpected.escape = "error")
 ```
 
+## Overview
+
+For the operation in the future, having a overview can help us understand the dataset easily.
+
+```{r overview}
+dim(USvideos)
+str(USvideos)
+```
+
+As we can see, there are 16 variables and 40949 observations in the original data. 
+
+Variables | description
+---|---
+**video_id** | A unique string for each observation to identify the different videos.
+**trending_date** | The date that each video be define as a trending video (appeared in  [top trending videos](https://www.youtube.com/feed/trending) page ).
+**title** | The title of the video.
+**channel_title** | The channel title that created by youtubers themselves.
+**category_id** | The catebory number of each video where it was posted. If you need the name of each catebory, please check the JSON file.
+**publish_time** | The excect time when youtuber posted the video.
+**tags** | The tags youtuber defined for each video.
+**views** | The number of views.
+**likes** | The number of likes.
+**dislikes** | The number of dislikes.
+**comment_count** | The number of comments.
+**thumbnail_link** | The thumbnail of each video cover.
+**comments_disabled** | Viewers can comment or not.
+**ratings_disabled** | viewers can rate the video or not.
+**video_error_or_removed** | The video was removed or not.
+**description** | The description of each video, created by youtubers.

@@ -3,15 +3,6 @@ title: "20-explore"
 output: html_notebook
 ---
 
-## Overview
-
-For the operation in the future, having a overview can help us understand the dataset easily.
-
-```{r overview}
-dim(USvideos)
-str(USvideos)
-```
-
 
 ## Assert outlier
 
