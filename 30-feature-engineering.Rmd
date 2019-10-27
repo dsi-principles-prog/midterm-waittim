@@ -11,8 +11,6 @@ Create a function for spliting the trending date column into 3 columns. And in t
 
 ```{r get_day_point}
 get_day_point <- function(df, day_column){
-  library(lubridate)
-  library(tidyverse)
 
   if(class(df[[day_column]])=="Date"){
     print("Date format check done.")
@@ -39,8 +37,6 @@ And for the column called "publish_time", we can split it into 6 columns. The ty
 Different pulish time will influence the attention obviously, as a result, a video published in right time will get the more views in the beginning.
 ```{r get_time_point}
 get_time_point <- function(df, time_column){
-  library(lubridate)
-  library(tidyverse)
 
   if(class(df[[time_column]])[1]=="POSIXct"){
     print("Timeformat check done.")
@@ -65,11 +61,9 @@ select(time_year,time_month,time_day,time_hour,time_minute,time_second)
 
 ### Get week day
 
-Definitely, the weekday will influence the views of videos in the first several publish day. 
+Definitely, the weekday that youtubers post the video will influence the views of videos in the first several publish day. According to Matthew effect, the video with more views in the very begining will have more possibility to be trending.
 ```{r get_weekday}
 get_weekday <- function(df, time_column){
-  library(lubridate)
-  library(tidyverse)
 
   df %>%
     mutate(weekday=weekdays.POSIXt({{time_column}})) 
@@ -84,10 +78,12 @@ get_weekday(USvideos_NNA, publish_time) %>%
 
 ### Count rows
 
-Now we will create a function to count the number of rows in decription column. The pattern of Line break symbol is "\\n". Count the number of "\\n" and plus 1, the result should be the the number of row.
+Now we will create a function to count the number of rows in decription column. 
+The rows' number of description represents the length of the description. A description of the appropriate length may help viewers understand the video better, and make the video be accepted by more people.
+The pattern of Line break symbol is "\\n". Count the number of "\\n" and plus 1, the result should be the the number of row.
 ```{r count_rows}
 count_rows <- function(df, chr_column){
-  library(tidyverse)
+  
   df %>%
     mutate(chr_row_num = stringr::str_count({{chr_column}}, pattern = fixed("\\n")) + 1)
 }
@@ -101,10 +97,12 @@ count_rows(USvideos_NNA, description) %>%
 
 ### Count pattern
 
-This function is similar to the last one but it is used to count the number of tags. And the dataset use "|" to split the tags. So the number of tags should be the number of "|" plus 1.
+This function is similar to the last one but it is used to count the number of tags. Youtubers use tags to help viewers find the video conveniently. As a result, suitable number of tags will be a factor what make a video trending.
+
+This dataset use "|" to split the tags. So the number of tags should be the number of "|" plus 1.
 ```{r count_pattern}
 count_pattern <- function(df, tag_column){
-  library(tidyverse)
+  
   df %>%
     mutate(pattern_num = stringr::str_count({{tag_column}}, pattern = fixed('"|"')) + 1)
 }
@@ -121,7 +119,7 @@ count_pattern(USvideos_NNA, tags) %>%
 Uppercase can catch viewers attention sometimes, therefore, it might influence the result.
 ```{r count_uppercase}
 count_uppercase <- function(df, chr_column){
-  library(tidyverse)
+  
   df %>%
     mutate(chr_upper_num = stringr::str_count({{chr_column}}, pattern = "[A-Z]" ))
 }
@@ -138,7 +136,7 @@ count_uppercase(USvideos_NNA, title) %>%
 Similar to the uppercase letter, the patterns like "?" and "!" might influence the viewers' attention too. 
 ```{r count_symbol}
 count_symbol <- function(df, chr_column){
-  library(tidyverse)
+  
   df %>%
     mutate(chr_symbol_num = stringr::str_count({{chr_column}}, pattern = "[?!]")) 
 }
@@ -156,7 +154,7 @@ The length of title might influence the result too. Therefore we could create a 
 Of course, this function could be used to calculate the length of description column too.
 ```{r get_chr_length}
 get_chr_length <- function(df, chr_column){
-  library(tidyverse)
+  
   df %>%
     mutate(chr_length = stringr::str_length({{chr_column}}))
 }
@@ -170,24 +168,28 @@ get_chr_length(USvideos_NNA, title) %>%
 
 ### Get ratio
 
-Sometimes we might need calculate the ratio between 2 variables. This function can help us to get the ratio column.
+Sometimes we might need calculate the ratio between 2 variables. This function can help us to get the ratio column.For example, the ratio between likes and dislikes will show us the controversy about the video. Hint: denominator + 0.001 to make sure there is no Nah when denominator is 0.
 ```{r get_ratio}
 get_ratio <- function(df, numerator, denominator){
-  if(class(df[[numerator]]) == "double" & class(df[[denominator]]) == "double"){
-    print("numerical format check done.")
-  }else{
-    stop("Not a numerical format.")
-  }
+  
   df %>%
-    mutate(new_col_name = {{numerator}}/{{denominator}})
+    mutate(likes_rate = {{numerator}}/({{denominator}}+0.001))
 }
 ```
+
+Test the function.
+```{r}
+get_ratio(USvideos_NNA, likes, dislikes) %>%
+  select(likes,dislikes,likes_rate)
+```
+
 
 ### Convert logical to 0/1
 
 Because there are some logical columns in our dataset, but if we want to use machine learning to predict the trending video, it will be easier when we convert them from TRUE/FALSE into 1/0.
 ```{r convert_to_01}
 convert_to_01 <- function(df, comments_disabled_logi, ratings_disabled_logi, video_error_removed_logi){
+  
   df %>% 
     mutate( comments_disabled = case_when({{comments_disabled_logi}}==TRUE ~ 1,
                                           {{comments_disabled_logi}}==FALSE ~ 0)) %>%
@@ -204,26 +206,86 @@ convert_to_01(USvideos_NNA, comments_disabled, ratings_disabled, video_error_or_
   select(comments_disabled,ratings_disabled,video_error_or_removed)
 ```
 
+### Class the trending
+
+For creating the machine learning model esaier, we can just label the videos by views number, so label them as 4 levels. The watershed should be quantile 25 and median and quantile 75.
+```{r Class the trending}
+class_level <- function(df, column){
+
+  df %>%
+    mutate( level= case_when({{column}} < quantile({{column}}, 0.25)[[1]] ~ "level1",
+                             {{column}} >= quantile({{column}}, 0.25)[[1]] & {{column}} < median({{column}}) ~ "level2",
+                             {{column}} >= median({{column}}) & {{column}} < quantile({{column}}, 0.75)[[1]] ~ "level3",
+                             {{column}} >= quantile({{column}}, 0.75)[[1]] ~ "level4"
+                             ))
+}
+```
+
+Test the function.
+```{r Class the trending test}
+class_level(USvideos_NNA, views) %>%
+  select(views,level)
+```
 
 
 
-## Prepare the data for modeling
+## Apply the feature engineering functions
 
 Now use the functions we defined before to complish the feature engineering.
+
+
 ```{r feature engineering}
-USvideos_NNA <- get_day_point(USvideos_NNA, "trending_date")
-USvideos_NNA <- get_time_point(USvideos_NNA, "publish_time")
-USvideos_NNA <- get_weekday(USvideos_NNA, publish_time)
-USvideos_NNA <- count_rows(USvideos_NNA, description)
-USvideos_NNA <- count_pattern(USvideos_NNA, tags)
-USvideos_NNA <- get_chr_length(USvideos_NNA, title)
-USvideos_NNA <- count_uppercase(USvideos_NNA, title)
-USvideos_NNA <- count_symbol(USvideos_NNA, title) 
-USvideos_NNA <- convert_to_01(USvideos_NNA, comments_disabled, ratings_disabled, video_error_or_removed)
+USvideos_NNA <- USvideos_NNA %>%
+  class_level(views) %>%
+  get_ratio(likes, dislikes) %>%
+  get_day_point("trending_date") %>%
+  get_time_point("publish_time") %>%
+  get_weekday(publish_time) %>%
+  count_rows(description) %>%
+  count_pattern(tags) %>%
+  get_chr_length(title) %>%
+  count_uppercase(title) %>%
+  count_symbol(title) %>%
+  convert_to_01(comments_disabled, ratings_disabled, video_error_or_removed)
 ```
+
 
 A quick overview after the feature engineering result.
 ```{r overview after fe}
 head(USvideos_NNA)
 ```
 
+## Test the feature engineering results
+
+```{r test the FE results, eval=FALSE}
+assert(data = USvideos_NNA, in_set(1, 0, allow.na = FALSE), comments_disabled)
+assert(data = USvideos_NNA, in_set(1, 0, allow.na = FALSE), ratings_disabled)
+assert(data = USvideos_NNA, in_set(1, 0, allow.na = FALSE), video_error_or_removed) 
+assert(data = USvideos_NNA, in_set("level1", "level2","level3","level4", allow.na = FALSE), level)
+assert(data = USvideos_NNA, within_bounds(lower.bound = 0, upper.bound = Inf, allow.na = FALSE), likes_rate)
+assert(data = USvideos_NNA, in_set(2017, 2018, allow.na = FALSE), date_year)
+assert(data = USvideos_NNA, in_set(seq(1,12,1), allow.na = FALSE), date_month)
+assert(data = USvideos_NNA, in_set(seq(1,31,1), allow.na = FALSE), date_day)
+assert(data = USvideos_NNA, in_set(seq(2006,2018,1), allow.na = FALSE), time_year)
+assert(data = USvideos_NNA, in_set(seq(1,12,1), allow.na = FALSE), time_month)
+assert(data = USvideos_NNA, in_set(seq(1,31,1), allow.na = FALSE), time_day)
+assert(data = USvideos_NNA, in_set(seq(0,23,1), allow.na = FALSE), time_hour)
+assert(data = USvideos_NNA, in_set(seq(0,59,1), allow.na = FALSE), time_minute)
+assert(data = USvideos_NNA, in_set(seq(0,59,1), allow.na = FALSE), time_second)
+assert(data = USvideos_NNA, in_set(c("Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"), allow.na = FALSE), weekday)
+assert(data = USvideos_NNA, within_bounds(lower.bound = 0, upper.bound = Inf, allow.na = FALSE), chr_row_num)
+assert(data = USvideos_NNA, within_bounds(lower.bound = 0, upper.bound = Inf, allow.na = FALSE), pattern_num)
+assert(data = USvideos_NNA, within_bounds(lower.bound = 0, upper.bound = Inf, allow.na = FALSE), chr_length)
+assert(data = USvideos_NNA, within_bounds(lower.bound = 0, upper.bound = Inf, allow.na = FALSE), chr_upper_num)
+assert(data = USvideos_NNA, within_bounds(lower.bound = 0, upper.bound = Inf, allow.na = FALSE), chr_symbol_num)
+```
+
+
+
+## Save the data
+
+```{r}
+USvideos_NNA %>%
+  select(views, likes, dislikes, comment_count, everything()) %>%
+  write_csv("data/USvideos_fe.csv")
+```
