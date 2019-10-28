@@ -1,0 +1,72 @@
+---
+title: "40-modeling"
+output: html_notebook
+---
+
+## Apply the feature engineering functions
+
+Now use the functions we defined before to complish the feature engineering.
+
+
+```{r feature engineering}
+USvideos_NNA <- USvideos_NNA %>%
+  class_level(views) %>%
+  get_ratio(likes, dislikes) %>%
+  get_day_point(trending_date) %>%
+  get_time_point(publish_time) %>%
+  get_weekday(publish_time) %>%
+  count_rows(description) %>%
+  count_pattern(tags) %>%
+  get_chr_length(title) %>%
+  count_uppercase(title) %>%
+  count_symbol(title) %>%
+  convert_to_01(comments_disabled, ratings_disabled, video_error_or_removed)
+```
+
+A quick overview after the feature engineering result.
+```{r overview after fe}
+head(USvideos_NNA)
+```
+
+
+## Save the data
+
+```{r save data}
+USvideos_NNA %>%
+  select(views, likes, dislikes, comment_count, everything()) %>%
+  write_csv("data/USvideos_fe.csv")
+```
+
+
+## Select the columns
+
+Now we can just select all of the numerical columns for modeling conveniently. Based on the data, we can try to use a simple machine learning model to predict. Of course, you can change this part and select the columns what is useful in your opinion.
+The columns called "views", "likes", "dislikes" and "comment_count" might can be used to identify the video is trending or not as the label.(The unselected column "level" could be used to identify too.) And the others could be used as inputs.
+```{r select useful column}
+USvideos_ML <- USvideos_NNA %>%
+  select(views, 
+         likes, 
+         dislikes, 
+         comment_count, 
+         category_id, 
+         comments_disabled, 
+         ratings_disabled, 
+         video_error_or_removed,
+         date_year,
+         date_month,
+         date_day,
+         time_year,
+         time_month,
+         time_day,
+         time_hour,
+         time_minute,
+         time_second,
+         chr_row_num,
+         pattern_num,
+         chr_length)
+USvideos_ML
+```
+
+Hint: remember divide the samples to trainning set and test set randomly first.
+
+
