@@ -63,10 +63,6 @@ Variables | description
 **description** | The description of each video, created by youtubers.
 
 
----
-title: "20-explore"
-output: html_notebook
----
 
 
 
